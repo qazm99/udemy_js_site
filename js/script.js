@@ -321,12 +321,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
             const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
             //const json = JSON.stringify(object);
-
-
             //request.send(formData);
             //request.send(json);
 
-            // 
             postData('http://localhost:3000/requests', json)
             //.then(data => data.text())
             .then(data => {
@@ -347,9 +344,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             //         //statusMessage.textContent = message.success;
             //         showThanksModal(message.success);
             //         form.reset();
-                    
             //         statusMessage.remove();
-                    
             //     } else {
             //         //statusMessage.textContent = message.failure;
             //         showThanksModal(message.failure);
@@ -456,8 +451,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
         // `;
         indicators.append(dot);
         dots.push(dot);
-
-
     };
 
     function changeDots(slideIndex) {
@@ -465,17 +458,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
         dots[slideIndex - 1].style.opacity = 1;
     };
 
-    function slideNumber (slideNum) {
+    function slideNumber(slideNum) {
         if (slideNum < 10) {
             return `0${slideNum}`;
         } else {
             return slideNumber;
         };
-
     };
     
     function changeSlide(slideIndex) {
-        offsetSlide = widthSlider.slice(0, widthSlider.length-2) * (slideIndex-1);
+        offsetSlide = widthSlider.replace(/\D/g, '') * (slideIndex-1);
         slideInner.style.transform = `translateX(-${offsetSlide}px)`;
         current.innerHTML = slideNumber(slideIndex);
         changeDots(slideIndex);
@@ -489,7 +481,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     });
 
     next.addEventListener('click', () => {
-        if (offsetSlide == +widthSlider.slice(0, widthSlider.length-2) * (slides.length - 1)) {
+        //if (offsetSlide == +widthSlider.replace(/\D/g, '') * (slides.length - 1)) {
+        if (slideIndex == slides.length) {
             //offsetSlide = 0;
             slideIndex = 1;
         } else {
@@ -501,18 +494,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
     });
 
     prev.addEventListener('click', () => {
-
-        if (offsetSlide == 0) {
+        if (slideIndex == 1) {
             //offsetSlide = +widthSlider.slice(0, widthSlider.length-2) * (slides.length - 1);
             slideIndex = slides.length;
-            
         } else {
             //offsetSlide -= +widthSlider.slice(0, widthSlider.length-2);
             slideIndex --;
         };
         //slideInner.style.transform = `translateX(-${offsetSlide}px)`;
         changeSlide(slideIndex);
-        
     });
 
     
